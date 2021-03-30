@@ -104,16 +104,16 @@ class _MyAppState extends State<MyApp> {
     double math  =  inforStorage.getDouble('math')?? 0 ; //?? 0
     double liteture  =  inforStorage.getDouble('liteture')?? 0 ;
     double english  =  inforStorage.getDouble('english')?? 0 ;
-     mathController.text = math.toString();
+     mathController?.text = math.toString();
     litetureController.text = liteture.toString();
     englishController.text = english.toString();
   }
 
   setInforIntoStorage() async {
     SharedPreferences inforStorage = await SharedPreferences.getInstance();
-    await inforStorage.setDouble('math', double.parse(mathController.text));
-    await inforStorage.setDouble('liteture', double.parse(litetureController.text));
-    await inforStorage.setDouble('english', double.parse(englishController.text));
+    await inforStorage.setDouble('math', double.parse(mathController.text==""?"0.0": mathController.text));
+    await inforStorage.setDouble('liteture', double.parse(litetureController.text==""?"0.0":litetureController.text ));
+    await inforStorage.setDouble('english', double.parse(englishController.text==""?"0.0":englishController.text));
   }
 
 
@@ -138,7 +138,8 @@ Widget inputText({@required controller, @required hintText, @required labelText}
 
 
 tinhDiemTrungBinh(){
-  return ( double.parse(mathController.text) + double.parse(litetureController.text) + double.parse(englishController.text) )/3;
+   if(mathController.text =="") print("Điểm toán lạ kì");
+  return ( double.parse(mathController.text==""?"0.0":mathController.text) + double.parse(litetureController.text==""?"0.0":litetureController.text) + double.parse(englishController.text ==""?"0.0":englishController.text) )/3;
 }
 
 xepLoaiHocLuc({@required diemTB})
